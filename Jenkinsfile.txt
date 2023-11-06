@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout GIT') {
+            steps {
+                echo 'Pulling...'
+                git branch: 'malekjemni_5gamix_g5', 
+                    url: 'https://github.com/saifeddinemaghrebi/5Gamix_Group5_Projet1.git'
+            }
+        }
+        stage('Unit Tests') {
+            steps {
+                echo 'Running unit tests...'
+            }
+        }
+    }
+}
