@@ -3,7 +3,9 @@ pipeline {
 
   stages{
     stage('Test'){
-      sh './mvnw test'
+      steps{
+        sh './mvnw test'
+      }
     }
   }
 }
