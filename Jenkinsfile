@@ -24,14 +24,12 @@ pipeline {
                 }
             
         }
-        stage('Docker Image') {
+        stage("Docker Compose") {
             steps 
-                   {
-                     sh 'docker run -itd makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 /bin/sh'
-                
-            }
+                 {
+                    sh "docker compose up -d"
+                }          
         }
-     
         stage('Test the code') {
             steps 
                  {
