@@ -58,16 +58,18 @@ pipeline {
             //}
         //}
 
-
         stage('SONAR') {
             steps {
+                script {
+                     // Définissez les informations de connexion SonarQube
+                      def sonarUsername = 'admin'
+                      def sonarPassword = 'saif'
 
-
-                        sh "mvn sonar:sonar -Dsonar.token=SonarToken"
-
-
-            }
+                 // Utilisez les informations de connexion pour l'analyse SonarQube
+                    sh "mvn sonar:sonar -Dsonar.login=${sonarUsername} -Dsonar.password=${sonarPassword}"
         }
+    }
+}
         stage('Nexus') {
             steps  {
                                     nexusArtifactUploader artifacts: [
