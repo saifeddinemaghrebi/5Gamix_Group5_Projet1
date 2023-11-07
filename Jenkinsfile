@@ -31,7 +31,7 @@ pipeline {
             }
         }
 
-        }
+        
         stage("Docker Compose") {
             steps 
                  {
@@ -63,3 +63,4 @@ pipeline {
             
         }
     }
+}
