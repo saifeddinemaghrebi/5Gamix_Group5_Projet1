@@ -5,7 +5,7 @@ pipeline {
         dockerCredentials               = 'dockerCredentials'
         registry                        = 'makoesprit/malekjemni-5gamix-gg-projet1'
         dockerImage                     = ''
-        sonarToken                      = credentials('sonarToken')
+        sonarToken                      = credentials('squ_b8419827111116f7100abef12468d028123cd190')
     }
 
     stages {
