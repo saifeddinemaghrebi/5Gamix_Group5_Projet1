@@ -1,5 +1,5 @@
-FROM openjdk:11
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-EXPOSE 8089
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:11-jre-slim
+
+
+EXPOSE 80
+ENTRYPOINT ["java", "-jar", "gestion-station-ski-1.0.jar"]
