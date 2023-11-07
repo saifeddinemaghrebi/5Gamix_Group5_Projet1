@@ -16,12 +16,7 @@ pipeline {
 
             }
         }
-        stage('Building project') {
-            steps {
-                    sh "mvn compile"
 
-            }
-        }
         stage('Docker Image') {
             steps {
 
