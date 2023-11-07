@@ -9,15 +9,14 @@ pipeline {
     }
 
     stages {
-        // stage('Clean Projects') {
-        //     steps{
-        //         sh "mvn clean"
-        //     } 
-        // }
+        stage('Clean Projects') {
+            steps{
+                sh "mvn clean"
+            } 
+        }
         
         stage('Build') {
             steps {
-                sh "mvn clean"
                 sh "mvn validate"
                 sh "mvn compile"
             }           
