@@ -9,7 +9,7 @@ services:
    MYSQL_ROOT_PASSWORD: root
   volumes:
     - /home/mysqldata:/var/lib/mysql
-projet1_app:
+spring_app:
   image: makoesprit/malekjemni-5gamix-g5-projet1:1.0.0
   container_name: mycontainer
   restart: on-failure
