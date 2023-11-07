@@ -1,77 +1,50 @@
 pipeline {
     agent any
-
+    
     environment {
-        dockerCredentials               = 'dockerCredentials'
-        registry                        = 'makoesprit/malekjemni-5gamix-g5-projet1'
-        dockerImage                     = 'makoesprit/malekjemni-5gamix-g5-projet1:1.0.0'
-        sonarToken                      = 'squ_b8419827111116f7100abef12468d028123cd190'
+        dockerImage = 'makoesprit/malekjemni-5gamix-g5-projet1:1.0.0'
     }
 
     stages {
-        stage('Clean Projects') {
-            steps 
-                 {
-                    sh "mvn clean"
+        stage('Checkout') {
+            steps {
+                script {
+                    // Check out the source code from the repository
+                    checkout scm
                 }
-            
-        }
-        stage('Building project') {
-            steps 
-                 {
-                    sh "mvn validate"
-                    sh "mvn compile"
-                }           
-        }
-          stage("Docker image") {
-            steps 
-                 {
-                     script {                   
-                     dir("docker") {
-                      sh "docker build -t ${dockerImage} ."
-                 }
-                }          
-             }
-        }
-           stage("Docker copy to hub ") {
-            steps 
-                 {               
-                     script {
-                     sh "docker push ${dockerImage}"
-                }              
-                }          
-        }
-        stage("Docker Compose") {
-            steps 
-                 {
-                    sh "docker compose up -d"
-                }          
-        }
-        stage('Test the code') {
-            steps 
-                 {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "mvn test"
-                    }               
             }
         }
-        stage('SONAR') {
-            steps 
-                 {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "mvn sonar:sonar -Dsonar.token=$sonarToken"
+
+        stage('Build and Test') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                script {
+                    // Build the Docker image
+                    docker.build dockerImage, '.'
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                script {
+                    // Push the Docker image to Docker Hub
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerCredentials') {
+                        dockerImage.push()
                     }
                 }
-            
+            }
         }
-        stage('Nexus') {
-            steps 
-                 {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "mvn deploy -DskipTests"
-                    }
-                }
-            
+        stage('Docker Compose') {
+            steps {
+                sh "docker-compose up -d"
+            }
         }
+
     }
 }
