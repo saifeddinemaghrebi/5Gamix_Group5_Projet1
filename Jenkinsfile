@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        dockerCredentials               = 'DockerCredential'
-        registry                        = 'saifeddinemaghrebi/5Gamix_Group5_Projet1'
+        dockerCredentials               = 'dockerCredentials'
+        registry                        = 'saifmag/SaifeddinMaghrebi-5Gamix-G5-Projet1'
         dockerImage                     = ''
         sonarToken                      = credentials('SonarToken')
     }
@@ -37,7 +37,7 @@ pipeline {
             steps {
 
                     script {
-                        docker.withRegistry('', DockerCredential) { dockerImage.push() }
+                        docker.withRegistry('', dockerCredentials) { dockerImage.push() }
                     }
 
             }
@@ -58,13 +58,7 @@ pipeline {
 
             }
         }
-        stage('Jacoco') {
-             steps {
 
-                    sh "mvn jacoco:report"
-                }
-
-        }
         stage('SONAR') {
             steps {
 
