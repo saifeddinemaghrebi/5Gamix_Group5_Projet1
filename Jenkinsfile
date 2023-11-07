@@ -35,8 +35,9 @@ pipeline {
                  withCredentials([usernamePassword(credentialsId: 'dockerCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                 sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
                 sh "docker push makoesprit/malekjemni-5gamix-g5-projet1:1.0.0"
-            }
-            }
+                }
+                }
+             }
         }
         stage("Docker Compose") {
             steps 
