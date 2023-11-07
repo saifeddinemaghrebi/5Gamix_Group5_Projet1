@@ -27,10 +27,11 @@ pipeline {
             steps 
                  {
                      script {                   
-                    // Build the Docker image
-                    sh "docker build -t ${dockerImage} docker"
-                }
+                     dir("docker") {
+                      sh "docker build -t ${dockerImage} ."
+                 }
                 }          
+             }
         }
            stage("Docker copy to hub ") {
             steps 
