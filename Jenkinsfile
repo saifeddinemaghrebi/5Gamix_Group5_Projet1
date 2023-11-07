@@ -52,11 +52,7 @@ pipeline {
                            }
                    }
 
-        stage('Test the code') {
-            steps {
-               sh "mvn -Dtest=tn.esprit.spring.CourseServicesImplTest test"
-            }
-        }
+
 
 
         stage('SONAR') {
@@ -68,6 +64,11 @@ pipeline {
 
             }
         }
+        stage('Test the code') {
+                    steps {
+                       sh "mvn -Dtest=tn.esprit.spring.CourseServicesImplTest test"
+                    }
+                }
         stage('Nexus') {
             steps  {
                                     sh "mvn deploy -DskipTests"
