@@ -27,7 +27,7 @@ pipeline {
         stage('Docker Image') {
             steps 
                    {
-                     dockerImage = 'makoesprit/malekjemni-5gamix-g5-projet1:1.0.0'
+                     sh 'docker run -itd makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 /bin/sh'
                 
             }
         }
