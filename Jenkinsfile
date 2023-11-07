@@ -23,15 +23,13 @@ pipeline {
                     sh "mvn compile"
                 }           
         }
-       stage('Docker Image') {
+        stage('Docker Image') {
             steps {
-                dir('/home/vagrant/docker') {
-                    sh 'docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 .'
-                }
+                    sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0' ."
+                    sh "docker push makoesprit/malekjemni-5gamix-g5-projet1:1.0.0'"
+                
             }
         }
-
-        
         stage("Docker Compose") {
             steps 
                  {
