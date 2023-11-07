@@ -5,7 +5,7 @@ pipeline {
         dockerCredentials               = 'saifDockerCredentials'
         registry                        = 'saifmag/saifeddinmaghrebi-5gamix-g5-projet1'
         dockerImage                     = ''
-        sonarToken                      = 'credentials('SonarToken')'
+        sonarToken                      = 'credentials('saifSonarToken')'
     }
 
     stages {
@@ -63,7 +63,7 @@ pipeline {
             steps {
 
 
-                        sh "mvn sonar:sonar -Dsonar.token=SonarToken"
+                        sh "mvn sonar:sonar -Dsonar.token=saifSonarToken"
 
 
             }
