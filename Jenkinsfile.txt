@@ -11,14 +11,14 @@ pipeline {
     stages {
         stage('Clean Projects') {
             steps {
-                dir("5Gamix_Group5_Projet1") {
+                 {
                     sh "mvn clean"
                 }
             }
         }
         stage('Building project') {
             steps {
-                dir("5Gamix_Group5_Projet1") {
+                 {
                     sh "mvn validate"
                     sh "mvn compile"
                 }
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Docker Image') {
             steps {
-                    dir("5Gamix_Group5_Projet1") {
+                   {
                         script {
                             dockerImage = docker.build registry + ":1.0.0"
                     }
@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Docker Push to hub') {
             steps {
-                dir("5Gamix_Group5_Projet1") {
+              {
                     script {
                         docker.withRegistry('', dockerCredentials) { dockerImage.push() }
                     }
@@ -44,14 +44,14 @@ pipeline {
         }
         stage("Docker Compose") {
             steps {
-                dir("5Gamix_Group5_Projet1") {
+                 {
                     sh "docker compose up -d"
                 }
             }
         }
         stage('Test the code') {
             steps {
-                dir("5Gamix_Group5_Projet1") {
+                 {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "mvn test"
                     }
@@ -60,14 +60,14 @@ pipeline {
         }
         stage('Jacoco') {
              steps {
-                dir("5Gamix_Group5_Projet1") {
+                {
                     sh "mvn jacoco:report"
                 }
              }
         }
         stage('SONAR') {
             steps {
-                dir("5Gamix_Group5_Projet1") {
+                 {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "mvn sonar:sonar -Dsonar.token=$sonarToken"
                     }
@@ -76,7 +76,7 @@ pipeline {
         }
         stage('Nexus') {
             steps {
-                dir("5Gamix_Group5_Projet1") {
+                 {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "mvn deploy -DskipTests"
                     }
