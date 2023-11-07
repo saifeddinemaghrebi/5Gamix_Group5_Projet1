@@ -5,7 +5,7 @@ pipeline {
         dockerCredentials               = 'saifDockerCredentials'
         registry                        = 'saifmag/saifeddinmaghrebi-5gamix-g5-projet1'
         dockerImage                     = ''
-        sonarToken                      = 'saifSonarCredentials'
+        sonarToken                      = 'credentials('SonarToken')'
     }
 
     stages {
@@ -58,18 +58,16 @@ pipeline {
             //}
         //}
 
+
         stage('SONAR') {
             steps {
-                script {
-                     // Définissez les informations de connexion SonarQube
-                      def sonarUsername = 'admin'
-                      def sonarPassword = 'saif'
 
-                 // Utilisez les informations de connexion pour l'analyse SonarQube
-                    sh "mvn sonar:sonar -Dsonar.login=${sonarUsername} -Dsonar.password=${sonarPassword}"
+
+                        sh "mvn sonar:sonar -Dsonar.token=SonarToken"
+
+
+            }
         }
-    }
-}
         stage('Nexus') {
             steps  {
                                     nexusArtifactUploader artifacts: [
