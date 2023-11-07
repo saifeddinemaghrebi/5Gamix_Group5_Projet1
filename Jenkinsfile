@@ -26,7 +26,7 @@ pipeline {
          stage('Docker Image') {
             steps {
                     sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."                  
-                }
+                 
             }
         }
         stage('Docker Push to hub') {
