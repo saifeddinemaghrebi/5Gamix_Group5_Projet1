@@ -52,11 +52,11 @@ pipeline {
                            }
                    }
 
-       // stage('Test the code') {
-         //   steps {
-           //     sh "mvn -Dtest=tn.esprit.spring.CourseServicesImplTest test"
-            //}
-        //}
+        stage('Test the code') {
+            steps {
+               sh "mvn -Dtest=tn.esprit.spring.CourseServicesImplTest test"
+            }
+        }
 
 
         stage('SONAR') {
@@ -70,22 +70,7 @@ pipeline {
         }
         stage('Nexus') {
             steps  {
-                                    nexusArtifactUploader artifacts: [
-                                          [
-                                              artifactId: 'gestion-station-ski',
-                                              classifier: '',
-                                              file: 'target/gestion-station-ski-1.0.jar',
-                                              type: 'jar'
-                                          ]
-                                      ],
-                                      credentialsId: 'nexus-credentials',
-                                      groupId: 'tn.esprit.spring<',
-                                      nexusUrl: '192.168.33.10:8081',
-                                      nexusVersion: 'nexus3',
-                                      protocol: 'http',
-                                      repository: 'NexusRepo',
-                                      version: '1.0'
-                                                      }
+                                    sh "mvn deploy -DskipTests"
         }
     }
 }
