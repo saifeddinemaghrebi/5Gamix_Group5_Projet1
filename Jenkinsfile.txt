@@ -31,15 +31,7 @@ pipeline {
                 
             }
         }
-        stage('Docker Push to hub') {
-            steps 
-              {
-                    script {
-                        docker.withRegistry('', dockerCredentials) { dockerImage.push() }
-                    }
-                }
-            
-        }
+     
         stage("Docker Compose") {
             steps 
                  {
