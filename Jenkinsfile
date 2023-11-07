@@ -21,9 +21,9 @@ pipeline {
         stage('Test the code') {
             steps {
 
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+
                         sh "mvn test"
-                    }
+
 
             }
         }
@@ -31,18 +31,18 @@ pipeline {
         stage('SONAR') {
             steps {
 
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+
                         sh "mvn sonar:sonar -Dsonar.token=SonarToken"
-                    }
+
 
             }
         }
         stage('Nexus') {
             steps {
 
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+
                         sh "mvn deploy -DskipTests"
-                    }
+
 
             }
         }
