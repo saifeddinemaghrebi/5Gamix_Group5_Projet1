@@ -45,18 +45,19 @@ pipeline {
                     sh "docker compose up -d"
                 }          
         }
-        stage('Test Junit') {
-            steps {
-                     sh "mvn -Dtest=tn.esprit.spring.PisteServicesTest test"
-                }
-            }
-        stage('SONAR') {
+          stage('SONAR') {
             steps 
                  {
                  sh "mvn sonar:sonar -Dsonar.token=$sonarToken"                                        
                 }
             
         }
+        stage('Test Junit') {
+            steps {
+                     sh "mvn -Dtest=tn.esprit.spring.PisteServicesTest test"
+                }
+            }
+      
         stage('Nexus') {
             steps 
                  {
