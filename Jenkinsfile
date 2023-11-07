@@ -57,10 +57,10 @@ pipeline {
             }
         }
         
-        stage('Nexus') {
-            steps{
-              sh 'mvn deploy'
-          }
-        }
+        // stage('Nexus') {
+        //     steps{
+        //       sh 'mvn deploy'
+        //   }
+        // }
     }
 }
