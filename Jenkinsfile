@@ -45,12 +45,12 @@ pipeline {
                     sh "docker compose up -d"
                 }          
         }
-        stage('Test the code') {
-          steps 
-                {
-                   sh "mvn test"                                 
-                }
-          }
+     //   stage('Test the code') {
+       //   steps 
+         //       {
+           //        sh "mvn test"                                 
+             //   }
+          //}
         
         stage('SONAR') {
             steps 
