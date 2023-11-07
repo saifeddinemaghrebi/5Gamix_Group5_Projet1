@@ -24,7 +24,7 @@ pipeline {
          
         stage('Docker Image') {
             steps {
-                sh "sudo docker build -t eyadhaouadi/eyadhaouadi-5gamix-g5-projet1:1.0.0 ."     
+                sh "docker build -t eyadhaouadi/eyadhaouadi-5gamix-g5-projet1:1.0.0 ."     
             }
         }
         
