@@ -20,7 +20,13 @@ pipeline {
                     sh "mvn compile"
                 }           
         }
-         
+          stage('Nexus') {
+            steps 
+                 {
+                  sh 'mvn deploy -DskipTests'
+                 }
+            
+        }
          stage('Docker Image') {
             steps {
                     sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."                  
@@ -55,13 +61,7 @@ pipeline {
                      sh "mvn -Dtest=tn.esprit.spring.PisteServicesTest test"
                 }
             }
-       stage('Nexus') {
-            steps 
-                 {
-                  sh 'mvn deploy'
-                 }
-            
-        }
+      
      
     }
 }
