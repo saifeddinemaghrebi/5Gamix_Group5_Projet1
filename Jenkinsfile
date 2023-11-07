@@ -16,6 +16,14 @@ pipeline {
 
             }
         }
+         stage('Building project') {
+                    steps {
+
+                            sh "mvn validate"
+                            sh "mvn compile"
+
+                    }
+                }
 
 
         stage('Test the code') {
