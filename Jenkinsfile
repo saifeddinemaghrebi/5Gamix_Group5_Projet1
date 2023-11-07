@@ -25,25 +25,20 @@ pipeline {
         }
          stage('Docker Build') {
             steps {
-                dir('docker') {
                         sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."               
-                }
             }
         }
         stage('Docker run') {
             steps {
-                dir('docker') {
                         sh "docker run -itd makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 /bin/sh"               
-                }
+
             }
         }
 
         stage('Docker Push') {
             steps {
-                dir('docker') {
                         sh "docker push makoesprit/malekjemni-5gamix-g5-projet1:1.0.0"
                     
-                }
             }
         }
         stage("Docker Compose") {
