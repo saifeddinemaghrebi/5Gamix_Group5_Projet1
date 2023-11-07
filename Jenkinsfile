@@ -28,13 +28,10 @@ pipeline {
 
         stage('Test the code') {
             steps {
-
-
-                        sh "mvn test"
-
-
+                sh "mvn -Dtest=tn.esprit.spring.CourseServicesImplTest test"
             }
         }
+
 
         stage('SONAR') {
             steps {
