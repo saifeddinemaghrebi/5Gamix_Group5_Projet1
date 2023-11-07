@@ -64,10 +64,22 @@ pipeline {
         stage('Nexus') {
             steps 
                  {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "mvn deploy -DskipTests"
-                    }
-                }
+                  nexusArtifactUploader artifacts: [
+                        [
+                            artifactId: 'gestion-station-ski', 
+                            classifier: '',      
+                            file: 'target/gestion-station-ski-1.0.jar',
+                            type: 'jar'         
+                        ]
+                    ], 
+                    credentialsId: 'nexus-credentials',   
+                    groupId: 'tn.esprit.spring<',  
+                    nexusUrl: '192.168.33.10:8081', 
+                    nexusVersion: 'nexus3',    
+                    protocol: 'http',          
+                    repository: 'NexusRepo', 
+                    version: '1.0'            
+                                    }
             
         }
     }
