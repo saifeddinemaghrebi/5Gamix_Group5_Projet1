@@ -63,7 +63,7 @@ pipeline {
             steps {
 
 
-                        sh "mvn sonar:sonar -Dsonar.token=sonarToken"
+                        sh "mvn sonar:sonar -Dsonar.token=squ_1b14e2959ffe6b8d983adfd25250ee4076d3dc7c"
 
 
             }
