@@ -20,6 +20,13 @@ pipeline {
                     sh "mvn compile"
                 }           
         }
+         stage('Nexus') {
+            steps 
+                 {
+                  sh 'mvn deploy'
+                 }
+            
+        }
          stage('Docker Image') {
             steps {
                     sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."                  
@@ -55,12 +62,6 @@ pipeline {
                 }
             }
       
-        stage('Nexus') {
-            steps 
-                 {
-                  sh 'mvn deploy'
-                 }
-            
-        }
+     
     }
 }
