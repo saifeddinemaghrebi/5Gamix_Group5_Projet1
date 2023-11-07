@@ -9,9 +9,9 @@ services:
    MYSQL_ROOT_PASSWORD: root
   volumes:
     - /home/mysqldata:/var/lib/mysql
- spring_app:
+projet1_app:
   image: makoesprit/malekjemni-5gamix-g5-projet1:1.0.0
-  container_name: mycontainer
+  container_name: project_container
   restart: on-failure
   ports:
    - 8089:8089

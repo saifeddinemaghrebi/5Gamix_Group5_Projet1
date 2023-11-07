@@ -21,8 +21,24 @@ pipeline {
                  {
                     sh "mvn validate"
                     sh "mvn compile"
+                }           
+        }
+          stage("Docker image") {
+            steps 
+                 {
+                     script {                   
+                    // Build the Docker image
+                    sh "docker build -t ${dockerImage} ."
                 }
-            
+                }          
+        }
+           stage("Docker copy to hub ") {
+            steps 
+                 {               
+                     script {
+                     sh "docker push ${dockerImage}"
+                }              
+                }          
         }
         stage("Docker Compose") {
             steps 
@@ -35,16 +51,8 @@ pipeline {
                  {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh "mvn test"
-                    }
-                
+                    }               
             }
-        }
-        stage('Jacoco') {
-             steps
-                {
-                    sh "mvn jacoco:report"
-                }
-            
         }
         stage('SONAR') {
             steps 
