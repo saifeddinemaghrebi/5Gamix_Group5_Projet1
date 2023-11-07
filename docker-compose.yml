@@ -15,5 +15,5 @@ services:
   restart: on-failure
   ports:
    - 8089:8089
-  depends_on:     
+  depends_on:
    - mysqldb
