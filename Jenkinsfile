@@ -5,7 +5,7 @@ pipeline {
         dockerCredentials               = 'dockerCredentials'
         registry                        = 'makoesprit/malekjemni-5gamix-g5-projet1'
         dockerImage                     = 'makoesprit/malekjemni-5gamix-g5-projet1:1.0.0'
-        sonarToken                      = credentials('sonarToken')
+        sonarToken                      = 'squ_868a2f12743ae28c8e533e6779f7d246d56565cc'
     }
 
     stages {
@@ -54,9 +54,7 @@ pipeline {
         stage('SONAR') {
             steps 
                  {
-                   withCredentials([string(credentialsId: 'sonarToken', variable: 'SONAR_TOKEN')]) {
-                                sh "mvn sonar:sonar -Dsonar.token=$SONAR_TOKEN"
-                            }                 
+                 sh "mvn sonar:sonar -Dsonar.token=$sonarToken"                                        
                 }
             
         }
