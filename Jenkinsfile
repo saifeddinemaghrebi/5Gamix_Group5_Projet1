@@ -25,7 +25,7 @@ pipeline {
         }
          stage('Docker Image') {
             steps {
-                    sh "docker build --no-cache -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."                  
+                    sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."                  
                  
             }
         }
