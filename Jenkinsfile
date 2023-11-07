@@ -23,20 +23,24 @@ pipeline {
 
         stage('Docker Build') {
             steps {
+                dir("docker") {
                 script {
                     // Build the Docker image
                     docker.build dockerImage, '.'
+                }
                 }
             }
         }
 
         stage('Docker Push') {
             steps {
+                dir("docker") {
                 script {
                     // Push the Docker image to Docker Hub
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerCredentials') {
                         dockerImage.push()
                     }
+                }
                 }
             }
         }
