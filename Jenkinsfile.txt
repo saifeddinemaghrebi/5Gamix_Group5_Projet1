@@ -1,83 +1,87 @@
-pipeline{
+pipeline {
     agent any
-    
-    stages{
-       stage ('Checkout GIT'){
-         steps{
-              echo 'Pulling...'
-                git branch: 'malekjemni_5gamix_g5', 
-                url: 'https://github.com/saifeddinemaghrebi/5Gamix_Group5_Projet1.git'
-              
-              }
-        }
-       stage ('MVN Clean')
-        {
-         steps{
-                sh 'mvn clean install -DskipTests'
-            }
-        }
-         stage ('MVN compile')
-        {
-         steps{
-                sh 'mvn compile'
-            }
-        }
-         stage('MVN Tests') {
-            steps {
-                sh 'mvn test'
-            }
-        }
 
-       
-         stage ('SonarQube :Quality Test')
-        {
-         steps{
-             withSonarQubeEnv(installationName: 'sonar'){
-                sh 'mvn sonar:sonar'
-             }
-            }
-        }
-              stage("Publish to Nexus Repository Manager") {
-            steps {
-                 nexusArtifactUploader artifacts: [
-                     [
-                         artifactId: 'achat',
-                         classifier: '',
-                         file: 'target/achat-1.0.jar',
-                         type: 'jar']], 
-                     credentialsId: 'Devops',
-                     groupId: 'tn.esprit.rh', 
-                     nexusUrl: '192.168.1.12:8081', 
-                     nexusVersion: 'nexus3', 
-                     protocol: 'http',
-                     repository: 'achat-realeases',
-                     version: '1.0'
-            }
-              }
-        stage('Docker image'){
-            steps {
-                 sh 'docker build -t aminetr/springapp .'
-            }
-        }
-        stage('DockerCompose') {
-        
-                       steps {
-                            
-				            sh 'docker-compose up -d'
-                        }
-                          
-        }
+    environment {
+        dockerCredentials               = 'dockerCredentials'
+        registry                        = 'makoesprit/malekjemni-5gamix-gg-projet1'
+        dockerImage                     = ''
+        sonarToken                      = credentials('sonarToken')
+    }
 
-       stage('push to DockerHub'){
-            steps { 
-		   withCredentials([string(credentialsId: 'dockerHub1-id', variable: 'dockerhubpwd')]) {
-                    sh 'docker login -u aminetr -p ${dockerhubpwd}'
-                    sh 'docker push aminetr/springapp'
-                    
+    stages {
+        stage('Clean Projects') {
+            steps {
+                dir("DevOps_Project") {
+                    sh "mvn clean"
                 }
-       }
-       }    
-        
-        
+            }
+        }
+        stage('Building project') {
+            steps {
+                dir("DevOps_Project") {
+                    sh "mvn validate"
+                    sh "mvn compile"
+                }
+            }
+        }
+        stage('Docker Image') {
+            steps {
+                    dir("DevOps_Project") {
+                        script {
+                            dockerImage = docker.build registry + ":1.0.0"
+                    }
+                }
+            }
+        }
+        stage('Docker Push to hub') {
+            steps {
+                dir("DevOps_Project") {
+                    script {
+                        docker.withRegistry('', dockerCredentials) { dockerImage.push() }
+                    }
+                }
+            }
+        }
+        stage("Docker Compose") {
+            steps {
+                dir("DevOps_Project") {
+                    sh "docker compose up -d"
+                }
+            }
+        }
+        stage('Test the code') {
+            steps {
+                dir("DevOps_Project") {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "mvn test"
+                    }
+                }
+            }
+        }
+        stage('Jacoco') {
+             steps {
+                dir("DevOps_Project") {
+                    sh "mvn jacoco:report"
+                }
+             }
+        }
+        stage('SONAR') {
+            steps {
+                dir("DevOps_Project") {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "mvn sonar:sonar -Dsonar.token=$sonarToken"
+                    }
+                }
+            }
+        }
+        stage('Nexus') {
+            steps {
+                dir("DevOps_Project") {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        sh "mvn deploy -DskipTests"
+                    }
+                }
+            }
         }
     }
+}
