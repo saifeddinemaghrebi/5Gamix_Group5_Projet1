@@ -18,31 +18,6 @@ pipeline {
         }
 
 
-        stage('Docker Image') {
-            steps {
-
-                        script {
-                            dockerImage = docker.build registry + ":1.0.0"
-
-                }
-            }
-        }
-        stage('Docker Push to hub') {
-            steps {
-
-                    script {
-                        docker.withRegistry('', dockerCredentials) { dockerImage.push() }
-                    }
-
-            }
-        }
-        stage("Docker Compose") {
-            steps {
-
-                    sh "docker compose up -d"
-                }
-
-        }
         stage('Test the code') {
             steps {
 
