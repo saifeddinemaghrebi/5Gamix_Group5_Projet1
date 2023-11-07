@@ -9,9 +9,9 @@ services:
    MYSQL_ROOT_PASSWORD: selim
   volumes:
     - /home/mysqldata:/var/lib/mysql
- project1_app:
+ springApp:
   image: selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0
-  container_name: mycontainer
+  container_name: springApp
   tty: true
   ports:
    - 8089:8089
