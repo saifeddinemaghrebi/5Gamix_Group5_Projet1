@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         dockerCredentials               = 'dockerCredentials'
-        registry                        = 'saifmag/SaifeddinMaghrebi-5Gamix-G5-Projet1'
+        registry                        = 'saifmag/saifeddinmaghrebi-5gamix-g5-projet1'
         dockerImage                     = ''
         sonarToken                      = credentials('SonarToken')
     }
@@ -16,6 +16,12 @@ pipeline {
 
             }
         }
+        stage('Building project') {
+                    steps {
+                            sh "mvn compile"
+
+                    }
+                }
 
         stage('Docker Image') {
             steps {
