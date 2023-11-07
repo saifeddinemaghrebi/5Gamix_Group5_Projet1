@@ -4,7 +4,7 @@ pipeline {
     environment {
         dockerCredentials               = 'dockerCredentials'
         registry                        = 'makoesprit/malekjemni-5gamix-g5-projet1'
-        dockerImage                     = ''
+        dockerImage                     = 'makoesprit/malekjemni-5gamix-g5-projet1:1.0.0'
         sonarToken                      = 'squ_b8419827111116f7100abef12468d028123cd190'
     }
 
@@ -25,19 +25,15 @@ pipeline {
         }
          stage('Docker Image') {
             steps {
-                        script {
-                            dockerImage = docker.build registry + ":1.0.0"
-                    
+                    sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."                  
                 }
             }
         }
         stage('Docker Push to hub') {
             steps {
-
                     script {
                         docker.withRegistry('', dockerCredentials) { dockerImage.push() }
-                    }
-                
+                    }            
             }
         }
         stage("Docker Compose") {
