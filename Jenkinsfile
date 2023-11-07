@@ -24,7 +24,7 @@ pipeline {
          
         stage('Docker Image') {
             steps {
-                sh "docker build -t selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0 ."     
+                sh "sudo docker build -t selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0 ."     
             }
         }
         
@@ -40,10 +40,9 @@ pipeline {
         }
         
         stage("Docker Compose") {
-            steps 
-                 {
-                    sh "docker compose up -d"
-                }          
+            steps {
+                sh "docker compose up -d"
+            }          
         }
       //  stage('Test the code') {
       //      steps 
@@ -53,18 +52,15 @@ pipeline {
       //  }
         
         stage('SONAR') {
-            steps 
-                 {
-                 sh "mvn sonar:sonar -Dsonar.token=$sonarToken"                                        
-                }
-            
+            steps {
+                sh "mvn sonar:sonar -Dsonar.token=$sonarToken"                                        
+            }
         }
         
         stage('Nexus') {
             steps{
               sh 'mvn deploy'
           }
-            
         }
     }
 }
