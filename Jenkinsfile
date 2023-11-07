@@ -23,24 +23,6 @@ pipeline {
                     sh "mvn compile"
                 }           
         }
-         stage('Docker Build') {
-            steps {
-                        sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 -f docker/Dockerfile ."               
-            }
-        }
-        stage('Docker run') {
-            steps {
-                        sh "docker run -itd makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 /bin/sh"               
-
-            }
-        }
-
-        stage('Docker Push') {
-            steps {
-                        sh "docker push makoesprit/malekjemni-5gamix-g5-projet1:1.0.0"
-                    
-            }
-        }
         stage("Docker Compose") {
             steps 
                  {
@@ -50,10 +32,8 @@ pipeline {
         stage('Test the code') {
             steps 
                  {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "mvn test"
-                    }               
-            }
+                     sh "mvn test"                                 
+                 }
         }
         stage('SONAR') {
             steps 
