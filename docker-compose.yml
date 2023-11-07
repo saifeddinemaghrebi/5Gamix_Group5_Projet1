@@ -10,7 +10,7 @@ services:
     volumes:
       - /home/mysqldata:/var/lib/mysql
   project1_app:
-    image: makoesprit/malekjemni-5gamix-g5-projet1:1.0.0
+    image: saifmag/saifeddinmaghrebi-5gamix-g5-projet1:1.0.0
     container_name: mycontainer
     restart: on-failure
     ports:
