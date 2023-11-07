@@ -2,10 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // dockerCredentials               = 'dockerCredentials'
-        // registry                        = 'selimdeniz/selimdeniz-5gamix-g5-projet1'
-        // dockerImage                     = 'selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0'
-        sonarToken                      = 'squ_db1e05a9a59f0bc391d29eb867ac5c7d36511ccc'
+        sonarToken = 'squ_db1e05a9a59f0bc391d29eb867ac5c7d36511ccc'
     }
 
     stages {
@@ -57,10 +54,10 @@ pipeline {
             }
         }
         
-        // stage('Nexus') {
-        //     steps{
-        //       sh 'mvn deploy'
-        //   }
-        // }
+        stage('Nexus') {
+            steps{
+              sh 'mvn deploy'
+          }
+        }
     }
 }
