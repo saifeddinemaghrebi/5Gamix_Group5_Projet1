@@ -24,14 +24,13 @@ pipeline {
                 }           
         }
         stage('Docker Build') {
-            steps {
-                dir("docker") {
+                steps {
                     script {
-                        sh "docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 ."
+                        docker.build('makoesprit/malekjemni-5gamix-g5-projet1:1.0.0', './docker')
                     }
                 }
             }
-        }
+
 
         stage("Docker Compose") {
             steps 
