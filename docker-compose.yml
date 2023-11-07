@@ -14,6 +14,6 @@ services:
     container_name: mycontainer
     tty: true
     ports:
-      - 8089:8089
+      - 8090:8089
     depends_on:
       - mysqldb
