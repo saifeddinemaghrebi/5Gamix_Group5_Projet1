@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        dockerCredentials               = 'dockerCredentials'
+        dockerCredentials               = 'saifDockerCredentials'
         registry                        = 'saifmag/saifeddinmaghrebi-5gamix-g5-projet1'
         dockerImage                     = ''
         sonarToken                      = credentials('SonarToken')
@@ -37,7 +37,7 @@ pipeline {
                      steps {
 
                              script {
-                              withCredentials([usernamePassword(credentialsId: 'dockerCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                              withCredentials([usernamePassword(credentialsId: 'saifDockerCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                                              sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
                                              sh "docker push saifmag/saifeddinmaghrebi-5gamix-g5-projet1:1.0.0"
                              }
