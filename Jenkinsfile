@@ -54,13 +54,12 @@ pipeline {
         stage('SONAR') {
             steps 
                  {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        sh "mvn sonar:sonar -Dsonar.token=$sonarToken"
-                    }
+                   withCredentials([string(credentialsId: 'sonarToken', variable: 'SONAR_TOKEN')]) {
+                                sh "mvn sonar:sonar -Dsonar.token=$SONAR_TOKEN"
+                            }                 
                 }
             
         }
-
         stage('Nexus') {
             steps 
                  {
