@@ -9,26 +9,27 @@ pipeline {
     }
 
     stages {
-        stage('Clean Projects') {
-            steps{
-                sh "mvn clean"
-            } 
-        }
+        // stage('Clean Projects') {
+        //     steps{
+        //         sh "mvn clean"
+        //     } 
+        // }
         
-        stage('Building project') {
+        stage('Build') {
             steps {
+                sh "mvn clean"
                 sh "mvn validate"
                 sh "mvn compile"
             }           
         }
          
-        stage('Docker Image') {
+        stage('Image') {
             steps {
                 sh "docker build -t selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0 ."     
             }
         }
         
-        stage('Docker Push to hub') {
+        stage('Push to Hub') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'dockerCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -51,7 +52,7 @@ pipeline {
       //           }
       //  }
         
-        stage('SONAR') {
+        stage('SONAR Test') {
             steps {
                 sh "mvn sonar:sonar -Dsonar.token=$sonarToken"                                        
             }
