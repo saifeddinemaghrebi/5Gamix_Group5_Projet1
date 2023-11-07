@@ -2,9 +2,6 @@ pipeline {
     agent any
 
     environment {
-        dockerCredentials               = 'dockerCredentials'
-        registry                        = 'makoesprit/malekjemni-5gamix-g5-projet1'
-        dockerImage                     = 'makoesprit/malekjemni-5gamix-g5-projet1:1.0.0'
         sonarToken                      = 'squ_868a2f12743ae28c8e533e6779f7d246d56565cc'
     }
 
