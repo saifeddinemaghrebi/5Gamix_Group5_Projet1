@@ -11,7 +11,7 @@ services:
       - /home/mysqldata:/var/lib/mysql
   project1_app:
     image: saifmag/saifeddinmaghrebi-5gamix-g5-projet1:1.0.0
-    container_name: mycontainer
+    container_name: saifcontainer
     tty: true
     ports:
       - 8090:8089
