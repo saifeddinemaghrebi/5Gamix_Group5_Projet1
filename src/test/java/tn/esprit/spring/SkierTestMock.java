@@ -12,10 +12,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class TestSkierMock {
     @InjectMocks
-    private SkierService SkierServiceImpl;
+    private ISkierService SkierServiceImpl;
 
     @Mock
-    private SkierRepository ISkierRepository;
+    private ISkierRepository ISkierRepository;
 
     @Test
     public void testUpdateSkier() {

@@ -13,10 +13,10 @@ import static org.junit.Assert.*;
 @Transactional
 public class TestSkier {
     @Autowired
-    private SkierService SkierServiceImpl;
+    private ISkierService SkierServiceImpl;
 
     @Autowired
-    private SkierRepository ISkierRepository;
+    private ISkierRepository ISkierRepository;
 
     @Test
     public void testAddSkier() {
