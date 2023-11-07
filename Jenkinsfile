@@ -23,15 +23,15 @@ pipeline {
                     sh "mvn compile"
                 }           
         }
-        stage('Docker Build') {
-                steps {
-                    script {
-                        docker.build('makoesprit/malekjemni-5gamix-g5-projet1:1.0.0', './docker')
-                    }
-                }
+        stage('Docker Image') {
+            steps {
+               sh '''
+                    cd docker &&
+                    docker build -t makoesprit/malekjemni-5gamix-g5-projet1:1.0.0 . &&
+                    docker push makoesprit/malekjemni-5gamix-g5-projet1:1.0.0
+                '''        
             }
-
-
+        }
         stage("Docker Compose") {
             steps 
                  {
