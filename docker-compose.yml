@@ -1,0 +1,19 @@
+version : "3.3"
+
+services:
+  mysqldb:
+    container_name: mysql
+    image: mysql:8
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /home/mysqldata:/var/lib/mysql
+  project1_app:
+    image: makoesprit/malekjemni-5gamix-g5-projet1:1.0.0
+    container_name: mycontainer
+    restart: on-failure
+    ports:
+      - 8089:8089
+    depends_on:
+      - mysqldb
