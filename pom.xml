@@ -64,7 +64,7 @@
 		</repository>
 	</distributionManagement>
 	<build>
-	vagra
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
