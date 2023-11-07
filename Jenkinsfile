@@ -19,5 +19,15 @@ pipeline{
         }
       }
     }
+    stage('Docker image'){
+      steps {
+        sh 'docker build -t aminetr/springapp .'
+      }
+    }
+    stage('DockerCompose') {    
+      steps {                      
+				sh 'docker-compose up -d'
+      }                    
+    }
   }
 }
