@@ -24,13 +24,36 @@ pipeline {
 
                     }
                 }
+                 stage('Docker Image') {
+                            steps {
 
+                                        script {
+                                            dockerImage = docker.build registry + ":1.0.0"
+                                    }
 
-        stage('Test the code') {
-            steps {
-                sh "mvn -Dtest=tn.esprit.spring.CourseServicesImplTest test"
-            }
-        }
+                            }
+                        }
+           stage('Docker Push to hub') {
+                     steps {
+
+                             script {
+                                 docker.withRegistry('', dockerCredentials) { dockerImage.push() }
+                             }
+
+                     }
+                 }
+            stage("Docker Compose") {
+                       steps
+                            {
+                               sh "docker compose up -d"
+                           }
+                   }
+
+       // stage('Test the code') {
+         //   steps {
+           //     sh "mvn -Dtest=tn.esprit.spring.CourseServicesImplTest test"
+            //}
+        //}
 
 
         stage('SONAR') {
@@ -43,13 +66,23 @@ pipeline {
             }
         }
         stage('Nexus') {
-            steps {
-
-
-                        sh "mvn deploy -DskipTests"
-
-
-            }
+            steps  {
+                                    nexusArtifactUploader artifacts: [
+                                          [
+                                              artifactId: 'gestion-station-ski',
+                                              classifier: '',
+                                              file: 'target/gestion-station-ski-1.0.jar',
+                                              type: 'jar'
+                                          ]
+                                      ],
+                                      credentialsId: 'nexus-credentials',
+                                      groupId: 'tn.esprit.spring<',
+                                      nexusUrl: '192.168.33.10:8081',
+                                      nexusVersion: 'nexus3',
+                                      protocol: 'http',
+                                      repository: 'NexusRepo',
+                                      version: '1.0'
+                                                      }
         }
     }
 }
