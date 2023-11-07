@@ -28,7 +28,7 @@ pipeline {
                  {
                      script {                   
                     // Build the Docker image
-                    sh "docker build -t ${dockerImage} ."
+                    sh "docker build -t ${dockerImage} docker"
                 }
                 }          
         }
