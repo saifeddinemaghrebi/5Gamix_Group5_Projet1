@@ -2,18 +2,18 @@ version : "3.3"
 
 services:
  mysqldb:
-  container_name: mysqldb1
-  image: mysql:latest
+  container_name: mysql
+  image: mysql:8
   restart: unless-stopped
   environment:
    MYSQL_ROOT_PASSWORD: selim
   volumes:
     - /home/mysqldata:/var/lib/mysql
- spring_app:
-  image: selimdeniz/springapp
-  container_name: spring1
-  restart: on-failure
+ project1_app:
+  image: selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0
+  container_name: mycontainer
+  tty: true
   ports:
    - 8089:8089
-  depends_on:
+  depends_on:     
    - mysqldb

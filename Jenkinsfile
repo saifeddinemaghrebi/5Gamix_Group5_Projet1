@@ -1,33 +1,69 @@
-pipeline{
-  agent any
-  
-  stages{
-    stage ('Build'){
-      steps{
-        sh 'mvn clean compile'
-      }
+pipeline {
+    agent any
+
+    environment {
+        // dockerCredentials               = 'dockerCredentials'
+        // registry                        = 'selimdeniz/selimdeniz-5gamix-g5-projet1'
+        // dockerImage                     = 'selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0'
+        // sonarToken                      = 'squ_868a2f12743ae28c8e533e6779f7d246d56565cc'
     }
-    stage ('SonarQube :Quality Test'){
-      steps{
-        withSonarQubeEnv(installationName: 'sonar'){
-          sh 'mvn sonar:sonar'
+
+    stages {
+        stage('Clean Projects') {
+            steps 
+                 {
+                    sh "mvn clean"
+                }
+            
         }
-      }
+        stage('Building project') {
+            steps 
+                 {
+                    sh "mvn validate"
+                    sh "mvn compile"
+                }           
+        }
+         stage('Docker Image') {
+            steps {
+                    sh "docker build -t selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0 ."                  
+                 
+            }
+        }
+        stage('Docker Push to hub') {
+            steps {
+                script {
+                 withCredentials([usernamePassword(credentialsId: 'dockerCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                sh "docker push selimdeniz/selimdeniz-5gamix-g5-projet1:1.0.0"
+                }
+                }
+             }
+        }
+        stage("Docker Compose") {
+            steps 
+                 {
+                    sh "docker compose up -d"
+                }          
+        }
+      //  stage('Test the code') {
+      //      steps 
+      //           {
+      //               sh "mvn test"                                 
+      //           }
+      //  }
+        stage('SONAR') {
+            steps 
+                 {
+                 sh "mvn sonar:sonar -Dsonar.token=$sonarToken"                                        
+                }
+            
+        }
+        stage('Nexus') {
+            steps 
+                 {
+                  sh 'mvn deploy'
+                                    }
+            
+        }
     }
-    stage('Docker image'){
-      steps {
-        sh 'docker build -t selimdeniz/springapp .'
-      }
-    }
-    stage('DockerCompose') {    
-      steps {                      
-				sh 'docker-compose up -d'
-      }                    
-    }
-    stage('Mockito'){
-      steps{
-        sh 'mvn test'
-      }
-    }
-  }
 }
