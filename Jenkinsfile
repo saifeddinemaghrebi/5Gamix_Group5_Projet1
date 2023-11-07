@@ -2,30 +2,20 @@ pipeline{
   agent any
   
   stages{
-    stage ('MVN Clean'){
+    stage ('Build'){
       steps{
-        sh 'mvn clean install -DskipTests'
-      }
-    }
-      stage ('MVN compile'){
-      steps{
-        sh 'mvn compile'
-      }
-    }
-    stage ('build package'){
-      steps{
-        sh 'mvn clean package'
+        sh './mvnw clean compile'
       }
     }
     stage('Mockito'){
       steps{
-        sh 'mvn test'
+        sh './mvnw test'
       }
     }
     stage ('SonarQube :Quality Test'){
       steps{
         withSonarQubeEnv(installationName: 'sonar'){
-          sh 'mvn sonar:sonar'
+          sh './mvnw sonar:sonar'
         }
       }
     }
