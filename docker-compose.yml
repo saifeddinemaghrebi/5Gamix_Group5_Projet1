@@ -7,7 +7,6 @@ services:
   restart: unless-stopped
   environment:
    MYSQL_ROOT_PASSWORD: root
-   MYSQL_DATABASE: stationSki
   volumes:
     - /home/mysqldata:/var/lib/mysql
  project1_app:
