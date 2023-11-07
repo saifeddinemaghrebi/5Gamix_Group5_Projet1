@@ -2,9 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // dockerCredentials               = 'dockerCredentials'
-        // registry                        = 'eyadhaouadi/eyadhaouadi-5gamix-g5-projet1'
-        // dockerImage                     = 'eyadhaouadi/eyadhaouadi-5gamix-g5-projet1:1.0.0'
+        
         sonarToken                      = 'squ_7c76de121a8521a3290b5d5f1cb1e120410b9fbd'
     }
 
@@ -22,13 +20,13 @@ pipeline {
             }           
         }
          
-        stage('Docker Image') {
+        stage('Docker Build Image') {
             steps {
                 sh "docker build -t eyadhaouadi/eyadhaouadi-5gamix-g5-projet1:1.0.0 ."     
             }
         }
         
-        stage('Docker Push to hub') {
+        stage('Docker Hub') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'dockerCredentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -45,12 +43,7 @@ pipeline {
                     sh "docker compose up -d"
                 }          
         }
-     //   stage('Test the code') {
-       //   steps 
-         //       {
-           //        sh "mvn test"                                 
-             //   }
-          //}
+    
         
         stage('SONAR') {
             steps 
@@ -60,11 +53,6 @@ pipeline {
             
         }
         
-        stage('Nexus') {
-           steps{
-          sh 'mvn deploy'
-         }
-            
-        }
+      
     }
 }
