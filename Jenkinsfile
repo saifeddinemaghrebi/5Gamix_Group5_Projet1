@@ -16,7 +16,7 @@ pipeline{
     }
     stage('Docker image'){
       steps {
-        sh 'docker build -t aminetr/springapp .'
+        sh 'docker build -t selimdeniz/springapp .'
       }
     }
     stage('DockerCompose') {    
