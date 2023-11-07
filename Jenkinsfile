@@ -7,11 +7,6 @@ pipeline{
         sh 'mvn clean compile'
       }
     }
-    stage('Mockito'){
-      steps{
-        sh 'mvn test'
-      }
-    }
     stage ('SonarQube :Quality Test'){
       steps{
         withSonarQubeEnv(installationName: 'sonar'){
@@ -28,6 +23,11 @@ pipeline{
       steps {                      
 				sh 'docker-compose up -d'
       }                    
+    }
+    stage('Mockito'){
+      steps{
+        sh 'mvn test'
+      }
     }
   }
 }
