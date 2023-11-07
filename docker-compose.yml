@@ -10,7 +10,7 @@ services:
   volumes:
     - /home/mysqldata:/var/lib/mysql
  project1_app:
-  image: eyadhaouadi-5gamix-g5-projet1:1.0.0
+  image: eyadhaouadi/eyadhaouadi-5gamix-g5-projet1:1.0.0
   container_name: mycontainer
   tty: true
   ports:
